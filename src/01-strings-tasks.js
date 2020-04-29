@@ -148,8 +148,10 @@ function removeFirstOccurrences(str, value) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  let string = str.replace('>', '');
+  string = string.replace('<', '');
+  return string;
 }
 
 
@@ -163,8 +165,8 @@ function unbracketTag(/* str */) {
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
-function convertToUpperCase(/* str */) {
-  throw new Error('Not implemented');
+function convertToUpperCase(str) {
+  return str.toUpperCase();
 }
 
 /**
@@ -182,8 +184,8 @@ function convertToUpperCase(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -209,8 +211,66 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const arrString = [];
+  const arrWidth = [];
+
+  function createTopString(str) {
+    const numWidth = Number(str);
+    let i = 0;
+    do {
+      i += 1;
+      if (i === 1) arrWidth.push('┌');
+      if (i !== 1 && i !== numWidth) arrWidth.push('─');
+      if (i === numWidth) arrWidth.push('┐');
+    } while (i < numWidth);
+    arrWidth.push('\n');
+    arrString.push(arrWidth.join(''));
+    arrWidth.length = 0;
+  }
+
+  function createMiddleString(str) {
+    const numWidth = Number(str);
+    let i = 0;
+    do {
+      i += 1;
+      if (i === 1) arrWidth.push('│');
+      if (i !== 1 && i !== numWidth) arrWidth.push(' ');
+      if (i === numWidth) arrWidth.push('│');
+    } while (i < numWidth);
+    arrWidth.push('\n');
+    arrString.push(arrWidth.join(''));
+    arrWidth.length = 0;
+  }
+
+  function createBottomString(str) {
+    const numWidth = Number(str);
+    let i = 0;
+    do {
+      i += 1;
+      if (i === 1) arrWidth.push('└');
+      if (i !== 1 && i !== numWidth) arrWidth.push('─');
+      if (i === numWidth) arrWidth.push('┘');
+    } while (i < numWidth);
+    arrWidth.push('\n');
+    arrString.push(arrWidth.join(''));
+    arrWidth.length = 0;
+  }
+
+  function createString(str) {
+    const numHeight = Number(str);
+    let i = 0;
+    do {
+      i += 1;
+      if (i === 1) createTopString(width);
+      if (i !== 1 && i !== numHeight) createMiddleString(width);
+      if (i === numHeight - 1) createBottomString(width);
+    } while (i < numHeight);
+  }
+
+  createString(height);
+  const res = arrString.join('');
+  return res;
 }
 
 
