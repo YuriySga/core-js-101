@@ -19,8 +19,9 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  const data = new Date(value);
+  return data;
 }
 
 /**
@@ -54,11 +55,8 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-  /* const d = new Date(date);
-  const year = d.getFullYear();
-  if (year % 4 === 0) return true;
-  return false; */
-  throw new Error('Not implemented');
+  const year = date.getFullYear();
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
 }
 
 
@@ -77,8 +75,12 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  const hours = (endDate.getHours() - startDate.getHours()).toString();
+  const min = (endDate.getMinutes() - startDate.getMinutes()).toString();
+  const sec = (endDate.getSeconds() - startDate.getSeconds()).toString();
+  const ms = (endDate.getMilliseconds() - startDate.getMilliseconds()).toString();
+  return `${hours.padStart(2, '0')}:${min.padStart(2, '0')}:${sec.padStart(2, '0')}.${ms.padStart(3, '0')}`;
 }
 
 
